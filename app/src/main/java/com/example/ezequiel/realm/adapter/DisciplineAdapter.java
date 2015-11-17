@@ -18,7 +18,7 @@ import io.realm.RealmResults;
 
 public class DisciplineAdapter extends RealmBaseAdapter<Discipline> implements ListAdapter {
 
-    public DisciplineAdapter( Context context, RealmResults<Discipline> realmResults, boolean automaticUpdate ){
+    public DisciplineAdapter( Context context, Realm reaml, RealmResults<Discipline> realmResults, boolean automaticUpdate ){
         super(context, realmResults, automaticUpdate);
     }
 

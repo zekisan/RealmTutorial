@@ -20,36 +20,41 @@ public class StudentsActivity extends AppCompatActivity {
     private RealmChangeListener realmChangeListener;
     private ListView lvStudents;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students);
 
-        realm = Realm.getInstance(this);
+        realm = Realm.getDefaultInstance();
+
         realmChangeListener = new RealmChangeListener() {
             @Override
             public void onChange() {
                 ((StudentAdapter) lvStudents.getAdapter()).notifyDataSetChanged();
             }
         };
+
         realm.addChangeListener(realmChangeListener);
-        students = realm.where(Student.class).findAll();
+        students = realm.where( Student.class ).findAll();
 
         lvStudents = (ListView) findViewById(R.id.lv_students);
-        lvStudents.setAdapter(new StudentAdapter(this, students, true));
+        lvStudents.setAdapter( new StudentAdapter( this, students, false ));
     }
 
-    // LISTENERS
-    public void callAddStudent( View view){
-        Intent it = new Intent( this, AddUpdateStudentActivity.class );
-        startActivity(it);
-    }
 
     @Override
     protected void onDestroy() {
         realm.removeAllChangeListeners();
         realm.close();
         super.onDestroy();
+
+    }
+
+
+    public void callAddStudent( View view){
+        Intent it = new Intent( this, AddUpdateStudentActivity.class );
+        startActivity(it);
     }
 
 }

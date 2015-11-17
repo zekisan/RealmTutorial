@@ -36,7 +36,7 @@ public class DisciplinesActivity extends AppCompatActivity {
         disciplines = realm.where(Discipline.class).findAll();
 
         lvDisciplines = (ListView) findViewById(R.id.lv_disciplines);
-        lvDisciplines.setAdapter(new DisciplineAdapter(this, disciplines, true));
+        lvDisciplines.setAdapter(new DisciplineAdapter(this, realm, disciplines, true));
     }
 
     // LISTENERS

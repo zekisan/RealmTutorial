@@ -26,48 +26,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
 
         Button btDisciplines = (Button) findViewById(R.id.bt_disciplines);
         Button btStudents = (Button) findViewById(R.id.bt_students);
 
-        Realm realm = Realm.getInstance(this);
+        Realm realm = Realm.getDefaultInstance();
         RealmResults<Discipline> disciplines = realm.where(Discipline.class).findAll();
         RealmResults<Student> students = realm.where(Student.class).findAll();
 
-        btDisciplines.setText("Disciplinas ("+disciplines.size()+")");
-        btStudents.setText("Estudantes ("+students.size()+")");
+        btDisciplines.setText( "Disciplinas ("+disciplines.size()+")" );
+        btStudents.setText( "Estudantes ("+students.size()+")" );
         realm.close();
     }
 
-    // Listeners
-    public void callDisciplines(View view){
+
+    public void callDisciplines( View view){
         Intent it = new Intent(this, DisciplinesActivity.class);
         startActivity(it);
     }
 
-    public void callStudents(View view){}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void callStudents( View view){
+        Intent it = new Intent(this, StudentsActivity.class);
+        startActivity(it);
     }
 }

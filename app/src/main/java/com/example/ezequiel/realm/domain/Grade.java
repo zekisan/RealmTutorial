@@ -5,17 +5,16 @@ import io.realm.annotations.PrimaryKey;
 
 public class Grade extends RealmObject{
 
-    public static final String ID = "com.example.ezequiel.realm.domain.RealmObject.ID";
+    //public static final String ID = "com.example.ezequiel.realm.domain.RealmObject.ID";
 
     @PrimaryKey
     private long id;
-
     private Discipline discipline;
     private double grade;
 
-    public static String getID() {
+    /*public static String getID() {
         return ID;
-    }
+    }*/
 
     public long getId() {
         return id;

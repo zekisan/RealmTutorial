@@ -18,8 +18,11 @@ import io.realm.RealmResults;
 
 public class StudentAdapter extends RealmBaseAdapter<Student> implements ListAdapter {
 
+    private Realm realm;
+
     public StudentAdapter(Context context, RealmResults<Student> realmResults, boolean automaticUpdate){
         super(context, realmResults, automaticUpdate);
+        this.realm = realm;
     }
 
     @Override
@@ -39,14 +42,14 @@ public class StudentAdapter extends RealmBaseAdapter<Student> implements ListAda
             holder = (CustomViewHolder) convertView.getTag();
         }
 
-        final Student d = realmResults.get(position);
-        holder.tvName.setText( d.getName() );
+        final Student s = realmResults.get(position);
+        holder.tvName.setText( s.getName() );
 
         holder.btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(context, AddUpdateStudentActivity.class);
-                it.putExtra(Student.ID, d.getId());
+                it.putExtra(Student.ID, s.getId());
                 context.startActivity(it);
             }
         });
@@ -54,9 +57,9 @@ public class StudentAdapter extends RealmBaseAdapter<Student> implements ListAda
         holder.btRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Realm realm = Realm.getInstance(context);
+                Realm realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
-                d.removeFromRealm();
+                s.removeFromRealm();
                 realm.commitTransaction();
                 realm.close();
             }
