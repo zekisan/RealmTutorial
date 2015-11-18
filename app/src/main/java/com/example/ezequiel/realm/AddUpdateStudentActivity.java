@@ -70,6 +70,16 @@ public class AddUpdateStudentActivity extends AppCompatActivity {
                 callRemoveGrade(v );
             }
         });
+
+        //update
+        if(student.getGrades() != null){
+
+            for (Grade g: student.getGrades()){
+                createGradeForView(findViewById(R.id.bt_add), disciplines, g);
+            }
+
+            callRemoveGrade(btRemove);
+        }
     }
 
 

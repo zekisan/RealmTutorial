@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.ezequiel.realm.AddUpdateDisciplineActivity;
 import com.example.ezequiel.realm.R;
 import com.example.ezequiel.realm.domain.Discipline;
+import com.example.ezequiel.realm.domain.Student;
 
 import io.realm.Realm;
 import io.realm.RealmBaseAdapter;
@@ -18,8 +19,11 @@ import io.realm.RealmResults;
 
 public class DisciplineAdapter extends RealmBaseAdapter<Discipline> implements ListAdapter {
 
-    public DisciplineAdapter( Context context, Realm reaml, RealmResults<Discipline> realmResults, boolean automaticUpdate ){
+    private Realm realm;
+
+    public DisciplineAdapter( Context context, Realm realm, RealmResults<Discipline> realmResults, boolean automaticUpdate ){
         super(context, realmResults, automaticUpdate);
+        this.realm = realm;
     }
 
     @Override
@@ -40,7 +44,8 @@ public class DisciplineAdapter extends RealmBaseAdapter<Discipline> implements L
         }
 
         final Discipline d = realmResults.get(position);
-        holder.tvName.setText( d.getName() );
+        int amountStudents = realm.where(Student.class).equalTo("grades.discipline.id", d.getId()).findAll().size();
+        holder.tvName.setText( d.getName() + "("+ amountStudents +")");
 
         holder.btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
